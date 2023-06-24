@@ -2,8 +2,8 @@ package com.ohgiraffers.mtvsreserve;
 
 import com.ohgiraffers.mtvsreserve.members.login.web.argumentresolver.LoginMemberArgumentResolver;
 import com.ohgiraffers.mtvsreserve.members.login.web.filter.LogFilter;
-import com.ohgiraffers.mtvsreserve.members.login.web.interveptor.LogInterceptor;
-import com.ohgiraffers.mtvsreserve.members.login.web.interveptor.LoginCheckInterceptor;
+import com.ohgiraffers.mtvsreserve.members.login.web.interceptor.LogInterceptor;
+import com.ohgiraffers.mtvsreserve.members.login.web.interceptor.LoginCheckInterceptor;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,4 +1,4 @@
-package com.ohgiraffers.mtvsreserve.members.login.web.interveptor;
+package com.ohgiraffers.mtvsreserve.members.login.web.interceptor;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.method.HandlerMethod;

@@ -25,12 +25,12 @@ public class LoginController {
     private final LoginService loginService;
 
     @GetMapping("/login")
-    public String loginForm(@ModelAttribute("loginForm") LoginDTO loginDTO) {
+    public String loginForm(@ModelAttribute("loginDTO") LoginDTO loginDTO) {
         return "login/loginForm";
     }
 
     @PostMapping("/login")
-    public String login(@Valid @ModelAttribute LoginDTO form, BindingResult bindingResult,
+    public String loginSuccess(@Valid @ModelAttribute("loginDTO") LoginDTO loginDTO, BindingResult bindingResult,
                           @RequestParam(defaultValue = "/") String redirectURL,
                           HttpServletRequest request) {
 
@@ -38,7 +38,7 @@ public class LoginController {
             return "login/loginForm";
         }
 
-        MemberDTO loginMember = loginService.login(form.getLoginId(), form.getPassword());
+        MemberDTO loginMember = loginService.login(loginDTO.getLoginId(), loginDTO.getPassword());
 
         if (loginMember == null) {
             bindingResult.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다.");
@@ -56,7 +56,7 @@ public class LoginController {
     }
 
     @PostMapping("/logout")
-    public String logoutV3(HttpServletRequest request) {
+    public String logout(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
         if (session != null) {
             session.invalidate();

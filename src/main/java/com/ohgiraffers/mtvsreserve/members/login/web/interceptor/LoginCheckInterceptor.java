@@ -1,4 +1,4 @@
-package com.ohgiraffers.mtvsreserve.members.login.web.interveptor;
+package com.ohgiraffers.mtvsreserve.members.login.web.interceptor;
 
 import com.ohgiraffers.mtvsreserve.members.login.web.SessionConst;
 import lombok.extern.slf4j.Slf4j;
