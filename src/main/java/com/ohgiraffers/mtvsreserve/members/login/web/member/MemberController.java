@@ -30,6 +30,13 @@ public class MemberController {
             return "members/addMemberForm";
         }
 
+        MemberDTO alreadyIdMember = memberService.duplicationCheckById(member.getLoginId());
+
+        if (alreadyIdMember != null) {
+            bindingResult.reject("saveFail", "중복된 ID가 있습니다.");
+            return "members/addMemberForm";
+        }
+
         memberService.save(member);
         return "redirect:/";
     }

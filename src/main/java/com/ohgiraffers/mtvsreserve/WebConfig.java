@@ -1,17 +1,13 @@
 package com.ohgiraffers.mtvsreserve;
 
 import com.ohgiraffers.mtvsreserve.members.login.web.argumentresolver.LoginMemberArgumentResolver;
-import com.ohgiraffers.mtvsreserve.members.login.web.filter.LogFilter;
 import com.ohgiraffers.mtvsreserve.members.login.web.interceptor.LogInterceptor;
 import com.ohgiraffers.mtvsreserve.members.login.web.interceptor.LoginCheckInterceptor;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import javax.servlet.Filter;
 import java.util.List;
 
 @Configuration
@@ -26,23 +22,14 @@ public class WebConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new LogInterceptor())
                 .order(1)
-                .addPathPatterns("/**")
-                .excludePathPatterns("/css/**", "/*.ico", "/error");
+                // ** 경로 끝까지 0개 이상의 경로(/) 일치, * 경로(/) 안에서 0개 이상의 문자 일치
+                .addPathPatterns("/**") // 모든 경로패턴에 대해 인터셉터 호출
+                .excludePathPatterns("/css/**", "/*.ico", "/error"); // 여기 있는거 빼고
 
         registry.addInterceptor(new LoginCheckInterceptor())
                 .order(2)
                 .addPathPatterns("/**")
                 .excludePathPatterns("/", "/members/add", "/login", "/logout",
                         "/css/**", "/*.ico", "/error");
-    }
-
-    @Bean
-    public FilterRegistrationBean logFilter() {
-        FilterRegistrationBean<Filter> filterRegistrationBean = new FilterRegistrationBean<>();
-        filterRegistrationBean.setFilter(new LogFilter());
-        filterRegistrationBean.setOrder(1);
-        filterRegistrationBean.addUrlPatterns("/*");
-
-        return filterRegistrationBean;
     }
 }

@@ -12,6 +12,7 @@ import java.util.Optional;
 
 import static com.ohgiraffers.mtvsreserve.members.login.domain.entity.MemberEntity.toMemberEntity;
 import static com.ohgiraffers.mtvsreserve.members.login.domain.entity.MemberEntity.toUpdateMemberEntity;
+import static com.ohgiraffers.mtvsreserve.members.login.domain.member.MemberDTO.toMemberDTO;
 
 @Service
 @RequiredArgsConstructor
@@ -22,6 +23,24 @@ public class MemberService {
     public void save(MemberDTO memberDTO) {
         MemberEntity memberEntity = toMemberEntity(memberDTO);
         memberRepository.save(memberEntity);
+    }
+
+    public MemberDTO duplicationCheckById(String loginId) {
+        /*
+        1. 회원이 입력한 아이디로 DB에서 조회를 함
+        2. DB에서 조회한 아이디와 사용자가 입력한 아이디가 중복되는지 판단
+         */
+
+        Optional<MemberEntity> duplicationIdMember =  memberRepository.findByLoginId(loginId) ;
+        if(duplicationIdMember.isPresent()){
+            //조회 결과가 있다. 아이디가 중복되어있다.
+            MemberEntity memberEntity = duplicationIdMember.get();
+            MemberDTO dto = toMemberDTO(memberEntity);
+            return dto;
+        }else{
+            //조회 결과가 없다(해당 아이디 가진 회원이 없다)
+            return null;
+        }
     }
 
     public List<MemberDTO> findAll(){
